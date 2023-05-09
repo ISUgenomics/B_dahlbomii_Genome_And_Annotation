@@ -1,4 +1,4 @@
-# Annotate the E. robusta genome
+# Annotate the B. dahlbomii genome
 
 ### Fastqc of RNAseq
 ```
