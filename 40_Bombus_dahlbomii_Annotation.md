@@ -63,7 +63,9 @@ cd ../config/species/
  cp -rf ../../../../02_Busco/04_RetryN19_Nobreaks/B_dahlbomiiGenome.FINAL_Busco/run_hymenoptera_odb10/augustus_output/retraining_parameters/BUSCO_B_dahlbomiiGenome.FINAL_Busco .
 
 
-echo "ml samtools; samtools index MergedRNA_sorted.bam;ml bamtools;ml genemark-et/4.69-xeer4uv;ml augustus/3.4.0-py39-gvoxpx6; ml braker/2.1.6-py39-powqw4r;braker.pl --genome=SoftmaskedB_dahlbomiiGenome.FINAL.fasta --softmasking --species=BUSCO_B_dahlbomiiGenome.FINAL_Busco --bam=MergedRNA_sorted.bam  --AUGUSTUS_CONFIG_PATH=/work/gif/remkv6/Toth/12_Bombus_dahlbomii/07_braker/Augustus/config/ --overwrite --useexisting" >dahlbomiiBraker.sh
+ml bamtools;ml genemark-et/4.69-xeer4uv;ml augustus/3.4.0-py39-gvoxpx6; ml braker/3.0.2;braker.pl --genome=SoftmaskedB_dahlbomiiGenome.FINAL.fasta --softmasking --species=BUSCO_B_dahlbomiiGenome.FINAL_Busco --bam=MergedRNA_sorted.bam  --AUGUSTUS_CONFIG_PATH=/work/gif/remkv6/Toth/12_Bombus_dahlbomii/07_braker/Augustus/config/ --overwrite --useexisting
+
+
 
 
 ml braker;ml augustus;cat braker.gtf |gtf2gff.pl --gff3 --out=B_dahlbomiiBraker.gff3
