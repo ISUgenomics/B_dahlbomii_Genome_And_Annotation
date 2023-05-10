@@ -1,4 +1,4 @@
-# Scaffolding C. flavipes genome with juicer and Hi-C
+# Scaffolding B. dahlbomii genome with juicer and Hi-C
 
 ### Setup juicer
 ```
