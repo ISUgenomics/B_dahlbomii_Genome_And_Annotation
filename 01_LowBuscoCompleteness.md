@@ -34,10 +34,42 @@ mkdir 02_Flye
 ln -s UnmappedReads.fastq
 ml miniconda3; source activate flye;flye  --pacbio-hifi UnmappedReads.fastq -o /work/gif/remkv6/Toth/12_Bombus_dahlbomii/10_FindBuscos/02_Flye -t 36
 ```
+results
+```
+new_Assemblathon.pl assembly.fasta
 
-### run compleasm
+---------------- Information for assembly 'assembly.fasta' ----------------
+
+
+                                         Number of scaffolds        197
+                                     Total size of scaffolds    9722856
+                                            Longest scaffold     341424
+                                           Shortest scaffold      10537
+                                 Number of scaffolds > 1K nt        197 100.0%
+                                Number of scaffolds > 10K nt        197 100.0%
+                               Number of scaffolds > 100K nt         17   8.6%
+                                 Number of scaffolds > 1M nt          0   0.0%
+                                Number of scaffolds > 10M nt          0   0.0%
+                                          Mean scaffold size      49355
+                                        Median scaffold size      33800
+                                         N50 scaffold length      68968
+                                          L50 scaffold count         46
+                                         n90 scaffold length      23543
+                                          L90 scaffold count        144
+                                                 scaffold %A      30.23
+                                                 scaffold %C      19.77
+                                                 scaffold %G      19.68
+                                                 scaffold %T      30.32
+                                                 scaffold %N       0.00
+                                         scaffold %non-ACGTN       0.00
+                             Number of scaffold non-ACGTN nt          0
 ```
 
+### Run megablast on assembly
 ```
+/work/gif/remkv6/Toth/12_Bombus_dahlbomii/10_FindBuscos/03_Megablast
+ln -s ../02_Flye/assembly.fasta
+cp ~/common_scripts/runMegablast2nt.sh .
 
-
+echo "sh runMegablast2nt.sh assembly.fasta" >Dhalblast.sh
+```
