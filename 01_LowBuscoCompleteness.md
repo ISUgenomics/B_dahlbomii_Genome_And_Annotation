@@ -72,4 +72,71 @@ ln -s ../02_Flye/assembly.fasta
 cp ~/common_scripts/runMegablast2nt.sh .
 
 echo "sh runMegablast2nt.sh assembly.fasta" >Dhalblast.sh
+
+# how many were bombus
+less assembly.vs.nt.cul10.1e3.megablast.out |sort -k1,1 -u |grep  "Bombus" |wc
+    185    4255   31677
+
+# how many were something else (bifidobacteria and caudoviricetes)
+less assembly.vs.nt.cul10.1e3.megablast.out |sort -k1,1 -u |grep -v "Bombus" |wc
+     12     298    2365
+```
+
+### Run compleasm on the assembly
+```
+sh runCompleasm.sh assembly.fasta eukaryota
+
+#!/bin/bash
+#runCompleasm.sh
+#Here is how to run this script: sh runCompleasm Genome.fasta Lineage
+Genome="$1"
+Lineage="$2"
+ml py-pandas/2.0.1-py310-ujlqazv
+compleasm.py download ${Lineage}
+compleasm.py run \
+-t 36 \
+-l ${Lineage} \
+-a  ${Genome} \
+-o ${Lineage}_${Genome%.*}_Compleasm
+
+
+
+S:10.20%, 26
+D:0.00%, 0
+F:0.00%, 0
+I:0.00%, 0
+M:89.80%, 229
+N:255
+
+```
+
+# Run compleasm to see if the busco scores are accurate
+```
+/work/gif/remkv6/Toth/12_Bombus_dahlbomii/10_FindBuscos/01_MiniBusco
+ml py-pandas/2.0.1-py310-ujlqazv
+wget https://github.com/huangnengCSU/compleasm/releases/download/v0.2.2/compleasm-0.2.2_x64-linux.tar.bz2
+tar -jxvf compleasm-0.2.2_x64-linux.tar.bz2
+
+./compleasm_kit/compleasm.py download eukaryota
+compleasm_kit/compleasm.py run -t16 -l eukaryota -a ../SoftmaskedB_dahlbomiiGenome.FINAL.fasta -o EukOut
+
+
+
+S:90.20%, 230
+D:0.00%, 0
+F:0.39%, 1
+I:0.00%, 0
+M:9.41%, 24
+N:255
+
+Yeah, the busco scores are correct.  And not even a fragment present...
+
+```
+
+### Compare compleasm between unmappable reads assembly and final dahlbomii assembly
+```
+#How many are not missing in unmappable reads assembly that are missing from the dahlbomii final  assembly?
+less full_table.tsv |awk 'NR>1 && $2!="Missing"' |cut -f 1 |cat - <(less ../../../../01_MiniBusco/EukOut/eukaryota_odb10/full_table.tsv |awk 'NR>1 && $2=="Missing" {print $1}' ) |sort|uniq -c |awk '$1==2' |wc
+     21      42     449
+21/24 missing were found this way.
 ```
