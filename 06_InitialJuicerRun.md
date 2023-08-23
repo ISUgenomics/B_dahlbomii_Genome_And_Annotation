@@ -276,3 +276,11 @@ Scaffolded assembly, n=19 though 20 sequences present in fasta file
 --------------------------------------------------
 
 ```
+
+
+HiC plot from dovetail before editing
+![Before Modification](https://github.com/ISUgenomics/B_dahlbomii_Genome_And_Annotation/blob/main/Assets/Round1Before.png)
+HiC plot after editing 
+![After Modification](https://github.com/ISUgenomics/B_dahlbomii_Genome_And_Annotation/blob/main/Assets/Round1After.png)
+
+

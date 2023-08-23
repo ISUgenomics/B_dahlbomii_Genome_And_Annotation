@@ -97,4 +97,10 @@ Average length of break (>25 Ns) between contigs in scaffold        469
 ```
 Most of the extra extraneous contigs are likley contamination, as they did not have any signal in the juicbox plot.   
 
+HiC plot from from round 1 + new scaffolds added (tiny bottom right)
+![Before Modification](https://github.com/ISUgenomics/B_dahlbomii_Genome_And_Annotation/blob/main/Assets/Round2Before.png)
+HiC plot after editing 
+![After Modification](https://github.com/ISUgenomics/B_dahlbomii_Genome_And_Annotation/blob/main/Assets/Round2After.png)
+
+
 

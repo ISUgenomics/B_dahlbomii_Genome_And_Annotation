@@ -89,8 +89,8 @@ Total contaminated contigs 3169-2923= 246 contigs
 
 #Took default circle picture of PGA assembly 2, mapped nanopore reads, blastn to NCBI nt
 ```
-![Blobtools Blob plot](./Assets/Cales.blob.circle.png)
-![Blobtools Snail plot](./Assets/Cales.snail.png)
+![Blobtools Blob plot](https://github.com/ISUgenomics/B_dahlbomii_Genome_And_Annotation/blob/main/Assets/PostAssemblyBlobplot.png)
+![Blobtools Snail plot](https://github.com/ISUgenomics/B_dahlbomii_Genome_And_Annotation/blob/main/Assets/PostAssemblySnail.png)
 
 
 
@@ -226,4 +226,5 @@ Average length of break (>25 Ns) between contigs in scaffold        281
                                Number of contig non-ACGTN nt          0
 ```
 
+Final plot after filtering contaminating scaffolds
 ![Blobtools Snail Plot](https://github.com/ISUgenomics/B_dahlbomii_Genome_And_Annotation/blob/main/Notebook_Masonbrink/Assets/BdahlbomiiSnail.png)
