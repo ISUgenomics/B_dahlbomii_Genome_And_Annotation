@@ -249,7 +249,7 @@ echo  "ml miniconda3;source activate busco5_env ; busco -i B_dahlbomiiGenome.fas
 --------------------------------------------------
 
 ```
-Scaffolded assembly, n=19
+Scaffolded assembly, n=19 though 20 sequences present in fasta file
 ```
 --------------------------------------------------
 |Results from generic domain eukaryota_odb10      |

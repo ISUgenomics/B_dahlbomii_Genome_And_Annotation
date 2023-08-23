@@ -1,6 +1,6 @@
 #  Why is the busco such a low score?
 
-# map reads
+# map long reads
 ```
 /work/gif/remkv6/Toth/12_Bombus_dahlbomii/10_FindBuscos
 
@@ -18,7 +18,7 @@ zcat 30_537121167.hifi_reads.fastq.gz |wc -l |awk '{print $1/4}'                
 less 30_537121167.hifi_reads.fastq_SoftmaskedB_dahlbomiiGenome.FINAL_minimap2.paf |cut -f 1 |uniq|wc -l
 623870
 
-
+#mapping percentage
 623870/641888 = 97.19%
 ```
 
