@@ -227,4 +227,4 @@ Average length of break (>25 Ns) between contigs in scaffold        281
 ```
 
 Final plot after filtering contaminating scaffolds
-![Blobtools Snail Plot](https://github.com/ISUgenomics/B_dahlbomii_Genome_And_Annotation/blob/main/Notebook_Masonbrink/Assets/BdahlbomiiSnail.png)
+![Blobtools Snail Plot](https://github.com/ISUgenomics/B_dahlbomii_Genome_And_Annotation/blob/main/Assets/BdahlbomiiSnail.png)
