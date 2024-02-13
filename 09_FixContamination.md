@@ -68,3 +68,132 @@ Get the proteins and transcripts
 gffread -g BifidoRemovedB_dahlbomiiGenome.fasta FixedNoContaminantB_dahlbomiiBraker.gff3 -y B_dahlbomiiProteins.fasta -x B_dahlbomiiTranscripts.fasta
 
 ```
+
+
+### Recompute statistics that have changed
+
+```
+ awk '$3=="gene"{print $5-$4}' FunctionalAnnotationB_dahlbomii.gff3|summary.sh
+Total:  101,173,916
+Count:  15,028
+Mean:   6,732
+Median: 2,552
+Min:    200
+Max:    330,148
+
+awk '$3=="mRNA"{print $5-$4}' FunctionalAnnotationB_dahlbomii.gff3|summary.sh
+Total:  137,712,600
+Count:  19,197
+Mean:   7,173
+Median: 2,677
+Min:    200
+Max:    330,148
+
+awk '$3=="CDS"{print $5-$4}' FunctionalAnnotationB_dahlbomii.gff3|summary.sh
+Total:  28,166,128
+Count:  117,484
+Mean:   239
+Median: 173
+Min:    2
+Max:    14,333
+
+
+ new_Assemblathon.pl B_dahlbomiiGenome.fasta
+
+---------------- Information for assembly 'B_dahlbomiiGenome.fasta' ----------------
+
+
+                                         Number of scaffolds         20
+                                     Total size of scaffolds  274050013
+                                            Longest scaffold   32487547
+                                           Shortest scaffold       5000
+                                 Number of scaffolds > 1K nt         20 100.0%
+                                Number of scaffolds > 10K nt         19  95.0%
+                               Number of scaffolds > 100K nt         19  95.0%
+                                 Number of scaffolds > 1M nt         18  90.0%
+                                Number of scaffolds > 10M nt         15  75.0%
+                                          Mean scaffold size   13702501
+                                        Median scaffold size   13970555
+                                         N50 scaffold length   17299723
+                                          L50 scaffold count          7
+                                         n90 scaffold length   11609214
+                                          L90 scaffold count         15
+                                                 scaffold %A      31.69
+                                                 scaffold %C      18.29
+                                                 scaffold %G      18.34
+                                                 scaffold %T      31.64
+                                                 scaffold %N       0.04
+                                         scaffold %non-ACGTN       0.00
+                             Number of scaffold non-ACGTN nt          0
+
+                Percentage of assembly in scaffolded contigs      87.1%
+              Percentage of assembly in unscaffolded contigs      12.9%
+                      Average number of contigs per scaffold       12.2
+Average length of break (>25 Ns) between contigs in scaffold        470
+
+                                           Number of contigs        245
+                              Number of contigs in scaffolds        240
+                          Number of contigs not in scaffolds          5
+                                       Total size of contigs  273944233
+                                              Longest contig   19374274
+                                             Shortest contig          1
+                                   Number of contigs > 1K nt        244  99.6%
+                                  Number of contigs > 10K nt        243  99.2%
+                                 Number of contigs > 100K nt         63  25.7%
+                                   Number of contigs > 1M nt         38  15.5%
+                                  Number of contigs > 10M nt         13   5.3%
+                                            Mean contig size    1118140
+                                          Median contig size      43663
+                                           N50 contig length   11383760
+                                            L50 contig count         10
+                                           n90 contig length    2069253
+                                            L90 contig count         28
+                                                   contig %A      31.70
+                                                   contig %C      18.29
+                                                   contig %G      18.35
+                                                   contig %T      31.66
+                                                   contig %N       0.00
+                                           contig %non-ACGTN       0.00
+                               Number of contig non-ACGTN nt          0
+
+
+# How many genes and mRNAs were functionally annotated
+ awk '$3=="mRNA"' FunctionalAnnotationB_dahlbomii.gff3 |grep -c "Note="
+15180
+
+
+#total mRNAs present
+awk '$3=="mRNA"' FunctionalAnnotationB_dahlbomii.gff3 |wc
+  19197  340320 3679236
+
+
+15,180/19,197=79.07%
+
+
+How many transcripts per gene?
+awk '$3=="mRNA"' FunctionalAnnotationB_dahlbomii.gff3 |awk '{print $9}' |sed 's/Parent=/\t/g' |sed 's/;/\t/g' |cut -f 3 |sort |uniq -c |awk '{print $1}' |sort |uniq -c |sort -k2,2n
+  11929 1
+   2328 2
+    563 3
+    143 4
+     48 5
+     11 6
+      4 7
+      1 8
+      1 9
+
+
+
+# Final genome buscos 
+hymenoptera_odb10
+        C:97.7%[S:97.4%,D:0.3%],F:0.5%,M:1.8%,n:5991
+        5856    Complete BUSCOs (C)
+        5836    Complete and single-copy BUSCOs (S)
+        20      Complete and duplicated BUSCOs (D)
+        29      Fragmented BUSCOs (F)
+        106     Missing BUSCOs (M)
+        5991    Total BUSCO groups searched
+
+
+```
+

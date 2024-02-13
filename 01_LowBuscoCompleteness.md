@@ -20,6 +20,8 @@ less 30_537121167.hifi_reads.fastq_SoftmaskedB_dahlbomiiGenome.FINAL_minimap2.pa
 
 #mapping percentage
 623870/641888 = 97.19%
+
+641888- 623870 = 18,018 reads 
 ```
 
 ### Assemble unmapped reads

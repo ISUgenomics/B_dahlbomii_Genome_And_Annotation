@@ -61,4 +61,4 @@ echo " ml miniconda3;source activate kraken2;kraken2 -db /work/gif/remkv6/Baum/1
 awk '$1>0 && $3>100' BdahlbomiiHiC_R2.fastq.report |uniq|sort -k1,1nr  >BdahlbomiiHiC_R2.fastq.report.summary
 ```
 
-These all came out a little odd because of the use of an older database that included the H. glycines genome.  Need to remake this database and rerun the above scripts. 08/08/23 
+These all came out a little odd because of the use of an older database that included the H. glycines genome.  
