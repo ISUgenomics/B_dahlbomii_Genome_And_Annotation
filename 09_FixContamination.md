@@ -72,6 +72,7 @@ gffread -g BifidoRemovedB_dahlbomiiGenome.fasta FixedNoContaminantB_dahlbomiiBra
 
 ### Recompute statistics that have changed
 
+gene characteristics
 ```
  awk '$3=="gene"{print $5-$4}' FunctionalAnnotationB_dahlbomii.gff3|summary.sh
 Total:  101,173,916
@@ -96,8 +97,10 @@ Mean:   239
 Median: 173
 Min:    2
 Max:    14,333
+```
 
-
+Genome assembly stats
+```
  new_Assemblathon.pl B_dahlbomiiGenome.fasta
 
 ---------------- Information for assembly 'B_dahlbomiiGenome.fasta' ----------------
@@ -155,23 +158,42 @@ Average length of break (>25 Ns) between contigs in scaffold        470
                                                    contig %N       0.00
                                            contig %non-ACGTN       0.00
                                Number of contig non-ACGTN nt          0
-
-
+```
+How many of our mRNAs were functionally annotated by a hit in NCBI NR or SWISS-prot?
+```
 # How many genes and mRNAs were functionally annotated
- awk '$3=="mRNA"' FunctionalAnnotationB_dahlbomii.gff3 |grep -c "Note="
+awk '$3=="mRNA"' FunctionalAnnotationB_dahlbomii.gff3 |grep -c "Note="
 15180
-
 
 #total mRNAs present
 awk '$3=="mRNA"' FunctionalAnnotationB_dahlbomii.gff3 |wc
   19197  340320 3679236
 
-
+#proportion of mRNAs that have a functional annotation from swissprot or NR
 15,180/19,197=79.07%
 
+#number of genes that gained a functional annotation via having an annotated mRNA
+less FunctionalAnnotationB_dahlbomii.gff3 |awk '$3=="gene"' |grep -c "Note="
+11086
 
+# number of genes
+less FunctionalAnnotationB_dahlbomii.gff3 |awk '$3=="gene"' |wc
+  15028  253815 2445328
+
+11086/15189= 73.0%
+
+
+# number of transposon associated genes
+ grep -i -e "transposase" -e "transcriptase" -e "retroelement" -e "helitron" -e "reverse" -e "helitron" -e "transposon" FunctionalAnnotationB_dahlbomii.gff3 |awk '$3=="gene"' |wc
+     33     592    5861
+
+```
+
+How many alternatively spliced transcripts per gene do we have
+```
 How many transcripts per gene?
 awk '$3=="mRNA"' FunctionalAnnotationB_dahlbomii.gff3 |awk '{print $9}' |sed 's/Parent=/\t/g' |sed 's/;/\t/g' |cut -f 3 |sort |uniq -c |awk '{print $1}' |sort |uniq -c |sort -k2,2n
+  
   11929 1
    2328 2
     563 3
@@ -181,10 +203,10 @@ awk '$3=="mRNA"' FunctionalAnnotationB_dahlbomii.gff3 |awk '{print $9}' |sed 's/
       4 7
       1 8
       1 9
-
-
-
-# Final genome buscos 
+```
+BUSCO on the final genome
+```
+Final genome buscos 
 hymenoptera_odb10
         C:97.7%[S:97.4%,D:0.3%],F:0.5%,M:1.8%,n:5991
         5856    Complete BUSCOs (C)
@@ -194,6 +216,79 @@ hymenoptera_odb10
         106     Missing BUSCOs (M)
         5991    Total BUSCO groups searched
 
+
+# run busco for eukaryota to put in table S1
+/work/gif3/masonbrink/Toth/01_dahlbomii/02_FindDahlbomiiContam/FinalFiles
+ echo "sh runBuscoEukaryota.sh B_dahlbomiiGenome.fasta" >EukBusco.sh
+
+runBuscoEukaryota.sh
+ ########################################################
+ #!/bin/bash
+#runBusco.sh
+#Here is how to run this script: sh runBusco.sh Genome.fasta
+Genome="$1"
+
+ml miniconda3;source activate busco5_env ;
+busco -i ${Genome} \
+-o ${Genome%.*}_Eukaryota_Busco \
+-m geno \
+-l eukaryota_odb10 \
+--long \
+--augustus \
+-c 35 \
+-f
+############################################################
+```
+
+How many gaps are in the genome?
+```
+#Counts per scaffold.  Four chromosome scale sequences had zero gaps!, meaning they were completely assembled as contigs
+ less B_dahlbomiiGenome.fasta |tr "\n" "\t" |sed 's/>/\n>/g' |sed 's/\t/#/1' |sed 's/\t//g' |sed 's/#/\t/g' |awk 'NR>1' |sed 's/N*N/\n/g' |awk -F'\t' '/^>/ {if (name != "") print name, count; name = substr($0, 2, index($0, "\t") - 1); count = 0; next} {count++} END {if (name != "") print name, count}'
+HiC_scaffold_1   1
+HiC_scaffold_2   4
+HiC_scaffold_3   2
+HiC_scaffold_4   0
+HiC_scaffold_5   0
+HiC_scaffold_6   69
+HiC_scaffold_7   1
+HiC_scaffold_8   47
+HiC_scaffold_9   2
+HiC_scaffold_10  1
+HiC_scaffold_11  2
+HiC_scaffold_12  2
+HiC_scaffold_13  0
+HiC_scaffold_14  5
+HiC_scaffold_15  76
+HiC_scaffold_16  2
+HiC_scaffold_17  9
+HiC_scaffold_18  0
+HiC_scaffold_20  0
+HiC_scaffold_32  0
+
+#How many gaps total?
+less B_dahlbomiiGenome.fasta |tr "\n" "\t" |sed 's/>/\n>/g' |sed 's/\t/#/1' |sed 's/\t//g' |sed 's/#/\t/g' |awk 'NR>1' |sed 's/N*N/\n/g' |awk -F'\t' '/^>/ {if (name != "") print name, count; name = substr($0, 2, index($0, "\t") - 1); count = 0; next} {count++} END {if (name != "") print name, count}' |awk '{print $2}' |summary.sh
+Total:  223
+Count:  20
+Mean:   11
+Median: 2
+Min:    0
+Max:    76
+
+```
+
+Number of N's per 100kbp
+```
+274050013 Genome length
+
+Number of N's in the genome
+less B_dahlbomiiGenome.fasta |grep -v ">" |sed 's/N/N\n/g' |grep -c "N"
+105580
+105580/1000 =106
+
+247050013/1000 = 247,050
+
+106/247050= 4.29e-4 
+4.29e-4 * 100 = 0.0429%
 
 ```
 
