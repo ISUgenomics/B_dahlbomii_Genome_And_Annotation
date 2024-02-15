@@ -215,6 +215,15 @@ hymenoptera_odb10
         29      Fragmented BUSCOs (F)
         106     Missing BUSCOs (M)
         5991    Total BUSCO groups searched
+Eukaryota_odb10
+        C:97.3%[S:97.3%,D:0.0%],F:1.6%,M:1.1%,n:255
+        248     Complete BUSCOs (C)
+        248     Complete and single-copy BUSCOs (S)
+        0       Complete and duplicated BUSCOs (D)
+        4       Fragmented BUSCOs (F)
+        3       Missing BUSCOs (M)
+        255     Total BUSCO groups searched
+
 
 
 # run busco for eukaryota to put in table S1
